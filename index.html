@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pack Importadores</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:white;
+}
+header{
+    text-align:center;
+    padding:30px 20px;
+}
+header h1{
+    font-size:38px;
+    background:linear-gradient(90deg,#00c6ff,#0072ff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+.preview-img{
+    width:280px;
+    border-radius:12px;
+    margin-top:15px;
+}
+.right-buttons{
+    margin-top:25px;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+    align-items:center;
+}
+button{
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+    width:220px;
+}
+.login-btn{background:#00c6ff;color:white;}
+.insta-btn{background:#E1306C;color:white;}
+.whatsapp-btn{background:#25D366;color:white;}
+
+.modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.8);
+    justify-content:center;
+    align-items:center;
+}
+.modal-content{
+    background:white;
+    color:black;
+    padding:30px;
+    border-radius:10px;
+    width:320px;
+    max-width:90%;
+    position:relative;
+}
+.modal-content button{
+    margin-top:15px;
+}
+.close{
+    position:absolute;
+    top:10px;
+    right:15px;
+    cursor:pointer;
+    font-weight:bold;
+}
+input{
+    width:100%;
+    padding:8px;
+    margin:8px 0;
+}
+.error{
+    color:red;
+    font-size:13px;
+}
+.progress{
+    margin-top:10px;
+    font-weight:bold;
+}
+.dashboard{
+    display:none;
+    padding:40px;
+    text-align:center;
+}
+.docs{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:20px;
+    margin-top:30px;
+}
+.doc-card{
+    background:white;
+    color:black;
+    padding:20px;
+    border-radius:10px;
+}
+.dashboard button{
+    margin:10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>PACK PREMIUM DE IMPORTADORES EN LIMA</h1>
+<img src="preview.jpg" class="preview-img">
+
+<div class="right-buttons">
+<button class="login-btn" onclick="openModal()">INICIAR SESIÓN</button>
+
+<button class="insta-btn"
+onclick="window.open('https://instagram.com/stevenv.ff','_blank')">
+Instagram
+</button>
+
+<button class="whatsapp-btn"
+onclick="window.open('https://wa.me/51921114873?text=Vengo%20de%20tu%20página%20quiero%20acceder%20a%20la%20lista%20de%20importadores.','_blank')">
+COMPRAR ACCESO AQUI
+</button>
+</div>
+
+</header>
+
+<div class="modal" id="loginModal">
+<div class="modal-content">
+<span class="close" onclick="closeModal()">X</span>
+<h3>Ingresa tu usuario y contraseña</h3>
+<input type="text" id="username" placeholder="Usuario">
+<div id="userError" class="error"></div>
+<input type="password" id="password" placeholder="Contraseña">
+<div id="passError" class="error"></div>
+<button onclick="togglePassword()">Ver contraseña</button>
+<button onclick="login()">CONFIRMAR</button>
+<div class="progress" id="progressText"></div>
+</div>
+</div>
+
+<div class="dashboard" id="dashboard">
+<h2>Bienvenido al Pack 🔥</h2>
+<div class="docs">
+<div class="doc-card"><a href="doc1.4 ACTUALIZACION LISTA DE IMPORTADORES  (1).pdf" target="_blank">Documento 1</a></div>
+<div class="doc-card"><a href="doc2.LISTA DE FABRICANTES STEVEN VENTAS PERÙ (1) (1).pdf" target="_blank">Documento 2</a></div>
+<div class="doc-card"><a href="doc3.LISTA DE IMPORTADORES DIRECTO ACTUALIZADO 2025 A_084202 (1).pdf" target="_blank">Documento 3</a></div>
+<div class="doc-card"><a href="doc4.LISTA DE IMPORTADORES NUEVOS.pdf" target="_blank">Documento 4</a></div>
+<div class="doc-card"><a href="doc5.MAS DE 700 IMPORTADORES (1).pdf" target="_blank">Documento 5</a></div>
+<div class="doc-card"><a href="doc6.Clases gratuitas_.pdf" target="_blank">Documento 6</a></div>
+</div>
+<button onclick="downloadAll()">DESCARGAR TODOS</button>
+<button onclick="logout()">SALIR</button>
+</div>
+
+<script>
+function openModal(){
+document.getElementById("loginModal").style.display="flex";
+}
+function closeModal(){
+document.getElementById("loginModal").style.display="none";
+}
+function togglePassword(){
+let pass=document.getElementById("password");
+pass.type=pass.type==="password"?"text":"password";
+}
+function login(){
+let user=document.getElementById("username").value;
+let pass=document.getElementById("password").value;
+document.getElementById("userError").innerText="";
+document.getElementById("passError").innerText="";
+if(user!=="StevenVentas0818"){
+document.getElementById("userError").innerText="Corrige el usuario";
+return;
+}
+if(pass!=="S67pj@#205"){
+document.getElementById("passError").innerText="Corrige la contraseña";
+return;
+}
+simulateLoading();
+}
+function simulateLoading(){
+let percent=0;
+let progress=document.getElementById("progressText");
+let interval=setInterval(()=>{
+percent++;
+progress.innerText="Cargando... "+percent+"%";
+if(percent>=100){
+clearInterval(interval);
+document.getElementById("loginModal").style.display="none";
+document.getElementById("dashboard").style.display="block";
+}
+},20);
+}
+
+function downloadAll(){
+let files=[
+"doc1.4 ACTUALIZACION LISTA DE IMPORTADORES  (1).pdf",
+"doc2.LISTA DE FABRICANTES STEVEN VENTAS PERÙ (1) (1).pdf",
+"doc3.LISTA DE IMPORTADORES DIRECTO ACTUALIZADO 2025 A_084202 (1).pdf",
+"doc4.LISTA DE IMPORTADORES NUEVOS.pdf",
+"doc5.MAS DE 700 IMPORTADORES (1).pdf",
+"doc6.Clases gratuitas_.pdf"
+];
+
+files.forEach((file,index)=>{
+setTimeout(()=>{
+let link=document.createElement("a");
+link.href=encodeURI(file);
+link.setAttribute("download","");
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
+}, index * 300);
+});
+}
+
+function logout(){
+document.getElementById("dashboard").style.display="none";
+}
+</script>
+
+</body>
+</html>
